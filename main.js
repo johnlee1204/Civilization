@@ -1,4 +1,6 @@
 /*jshint maxerr: 1000 */
+
+document.getElementById('buttonS').onclick = beginGame;
 var canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
 canvas.oncontextmenu = function(e) {
@@ -56,6 +58,7 @@ var images = {
     deepWater: deepWaterTile,
     forest:forestTile
 };
+var imagesAsNum = [blackTile, grassTile, rockTile, waterTile, sandTile, cityTile, deepWaterTile,forestTile];
 var xOffSet = 0;
 var yOffSet = 0;
 var up = true;
@@ -66,379 +69,43 @@ var press = false;
 var mouseX;
 var mouseY;
 var currentFile;
+let drawing = false;
+let board;
 
 
-class Tile {
-    constructor(x, y, size, image) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.image = image;
-    }
 
-    draw() {
-        //ctx.fillStyle = this.color;
-        ctx.drawImage(this.image, this.x - xOffSet, this.y - yOffSet, this.size, this.size);
+
+function beginGame() {
+    var mapToLoadAsString;
+    var scope = this;
+    var oReq = new XMLHttpRequest(); //New request object
+    oReq.onload = function() {
+        //mapToLoadAsString = oReq.response;
+        //scope.mapToLoad = mapToLoadAsString.split(',');
+        let serverReply = JSON.parse(oReq.response);
+       	board = serverReply.gameboard;
+       	//let player1 = serverReply.player1.unserialize();
+       	drawing = true;
+    };
+    oReq.open("get", "php/GameRunner.php", true);
+    oReq.send();
+    tileSize = 32;
+    document.getElementById('startButton').style.display = "none";
+    document.getElementById('buttonS').style.display = "none";
+}
+
+function drawBoard(board){
+    for (let i = 0; i < board.tiles.length; i++) {
+        for (let j = 0; j < board.tiles[i].length; j++) {
+        	if(imagesAsNum[board.tiles[i][j].image]){
+       		     ctx.drawImage(imagesAsNum[board.tiles[i][j].image],j*tileSize-xOffSet,i*tileSize-yOffSet,tileSize,tileSize);
+       		}
+        }
     }
 }
 
-class BoardOfTiles {
-    constructor() {
-        this.tiles = [];
-        for (var i = 0; i < 50; i++) {
-            this.tiles[i] = [];
-            for (var j = 0; j < 100; j++) {
-                this.tiles[i][j] = new Tile(j * tileSize, i * tileSize, tileSize, images.black);
-            }
-        }
-    }
 
-    draw() {
-        for (let i = 0; i < this.tiles.length; i++) {
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                this.tiles[i][j].draw();
-            }
-        }
-    }
-
-    isoMap() {
-    	for(let i = 0;i<this.tiles.length;i++){
-    		for(let j = 0; j<this.tiles[i].length;j++)
-    		{
-    			let tempX = this.tiles[i][j].x - this.tiles[i][j].y;  
-    			this.tiles[i][j].y = (this.tiles[i][j].x + this.tiles[i][j].y)/2;
-    			this.tiles[i][j].x = tempX;
-    		}
-    	}
-    }
-
-    randomize1() {
-        var randomTile = Math.floor(Math.random() * 10) + 1;
-        var randomSwap = Math.floor(Math.random() * 2);
-        for (let i = 0; i < this.tiles.length; i += 5) {
-            for (let j = 0; j < this.tiles.length; j += 5) {
-                if (randomSwap == 1) {
-                    randomTile = Math.floor(Math.random() * 20) + 1;
-                }
-                randomSwap = Math.floor(Math.random() * 2);
-                for (let k = 0; k < 5; k++) {
-                    for (let l = 0; l < 5; l++) {
-                        if (randomTile < 10)
-                            this.tiles[i + k][j + l].image = images.grass;
-                        else if (randomTile < 18)
-                            this.tiles[i + k][j + l].image = images.water;
-                        else if (randomTile < 20)
-                            this.tiles[i + k][j + l].image = images.rock;
-                        else
-                            this.tiles[i + k][j + l].image = images.sand;
-                    }
-                }
-            }
-        }
-    }
-
-    randomize2() {
-        var randomTile = Math.floor(Math.random() * 10) + 1;
-        for (let i = 0; i < this.tiles.length; i++) {
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                randomTile = Math.floor(Math.random() * 20) + 1;
-                if (randomTile < 9)
-                    this.tiles[i][j].image = images.grass;
-                else if (randomTile < 17)
-                    this.tiles[i][j].image = images.water;
-                else if (randomTile < 18)
-                    this.tiles[i][j].image = images.rock;
-                else
-                    this.tiles[i][j].image = images.sand;
-            }
-        }
-        this.smooth();
-        this.smooth();
-        this.smooth();
-        this.smooth();
-        let grassToForest = Math.floor(Math.random()*4);
-      	for(let i = 0; i<this.tiles.length;i++){
-      		for(let j = 0; j<this.tiles[i].length;j++){
-      			if(grassToForest == 1&&this.tiles[i][j].image == images.grass){
-      				this.tiles[i][j].image = images.forest;
-      			}
-      			grassToForest = Math.floor(Math.random()*4);
-      		}
-      	}
-    }
-
-    smooth() {
-        var gc = 0,
-            wc = 0,
-            rc = 0,
-            sc = 0;
-        for (let i = 0; i < this.tiles.length; i++) {
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                let possible = [i > 0 ? this.tiles[i - 1][j] : -1, this.tiles[i][j - 1], this.tiles[i][j + 1], i < this.tiles.length - 1 ? this.tiles[i + 1][j] : -1];
-                //alert('in possible');
-                for (let k = 0; k < possible.length; k++) {
-                    if (possible[k] == -1 || !(possible[k] || possible[k] === 0)) {
-                        possible.splice(k, 1);
-                        k--;
-                    }
-                }
-                for (let k = 0; k < possible.length; k++) {
-                    if (possible[k].image == images.grass)
-                        gc++;
-                    else if (possible[k].image == images.water)
-                        wc++;
-                    else if (possible[k].image == images.sand)
-                        sc++;
-                    else if (possible[k].image == images.rock)
-                        rc++;
-                }
-                if (Math.max(gc, wc, sc, rc) == gc && Math.max(wc, sc, rc) < gc)
-                    this.tiles[i][j].image = images.grass;
-                else if (Math.max(gc, wc, sc, rc) == wc && Math.max(gc, sc, rc) < wc)
-                    this.tiles[i][j].image = images.water;
-                else if (Math.max(gc, wc, sc, rc) == sc && Math.max(wc, gc, rc) < sc)
-                    this.tiles[i][j].image = images.sand;
-                else if (Math.max(gc, wc, sc, rc) == rc && Math.max(wc, sc, gc) < rc)
-                    this.tiles[i][j].image = images.rock;
-                gc = 0;
-                wc = 0;
-                rc = 0;
-                sc = 0;
-            }
-        }
-
-
-        for (let i = this.tiles.length - 1; i >= 0; i--) {
-            for (let j = this.tiles[i].length - 1; j >= 0; j--) {
-
-                let possible = [i > 0 ? this.tiles[i - 1][j] : -1, this.tiles[i][j - 1], this.tiles[i][j + 1], i < this.tiles.length - 1 ? this.tiles[i + 1][j] : -1];
-                //alert('in possible');
-                for (let k = 0; k < possible.length; k++) {
-                    if (possible[k] == -1 || !(possible[k] || possible[k] === 0)) {
-                        possible.splice(k, 1);
-                        k--;
-                    }
-                }
-                for (let k = 0; k < possible.length; k++) {
-                    if (possible[k].image == images.grass)
-                        gc++;
-                    else if (possible[k].image == images.water)
-                        wc++;
-                    else if (possible[k].image == images.sand)
-                        sc++;
-                    else if (possible[k].image == images.rock)
-                        rc++;
-                }
-                if (Math.max(gc, wc, sc, rc) == gc && Math.max(wc, sc, rc) < gc)
-                    this.tiles[i][j].image = images.grass;
-                else if (Math.max(gc, wc, sc, rc) == wc && Math.max(gc, sc, rc) < wc)
-                    this.tiles[i][j].image = images.water;
-                else if (Math.max(gc, wc, sc, rc) == sc && Math.max(wc, gc, rc) < sc)
-                    this.tiles[i][j].image = images.sand;
-                else if (Math.max(gc, wc, sc, rc) == rc && Math.max(wc, sc, gc) < rc)
-                    this.tiles[i][j].image = images.rock;
-                gc = 0;
-                wc = 0;
-                rc = 0;
-                sc = 0;
-            }
-        }
-
-
-
-
-    }
-
-
-    paintTile(x, y) {
-        for (let i = 0; i < this.tiles.length; i++) {
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                if (x > this.tiles[i][j].x && x < this.tiles[i][j].x + this.tiles[i][j].size && y > this.tiles[i][j].y && y < this.tiles[i][j].y + this.tiles[i][j].size) {
-                    if (currentImage === 0)
-                        this.tiles[i][j].image = images.black;
-                    else if (currentImage == 1)
-                        this.tiles[i][j].image = images.grass;
-                    else if (currentImage == 2)
-                        this.tiles[i][j].image = images.rock;
-                    else if (currentImage == 3)
-                        this.tiles[i][j].image = images.water;
-                    else if (currentImage == 4)
-                        this.tiles[i][j].image = images.sand;
-                }
-            }
-        }
-    }
-
-    zoomStart() {
-        //alert('zoomstart called');
-        currentNumsMap = [];
-        for (let i = 0; i < this.tiles.length; i++) {
-            currentNumsMap[i] = [];
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                if (this.tiles[i][j].image == images.black) {
-                    currentNumsMap[i][j] = 0;
-                } else if (this.tiles[i][j].image == images.grass) {
-                    currentNumsMap[i][j] = 1;
-                } else if (this.tiles[i][j].image == images.rock) {
-                    currentNumsMap[i][j] = 2;
-                } else if (this.tiles[i][j].image == images.water) {
-                    currentNumsMap[i][j] = 3;
-                } else if (this.tiles[i][j].image == images.sand) {
-                    currentNumsMap[i][j] = 4;
-                } else if (this.tiles[i][j].image == images.city) {
-                    currentNumsMap[i][j] = 5;
-                } else if (this.tiles[i][j].image == images.deepWater) {
-                    currentNumsMap[i][j] = 6;
-                }
-                else if (this.tiles[i][j].image == images.forest) {
-                    currentNumsMap[i][j] = 7;
-                }
-            }
-        }
-    }
-
-    zoomEnd() {
-        // alert('zoomend called');
-        for (let i = 0; i < currentNumsMap.length; i++) {
-            for (let j = 0; j < currentNumsMap[i].length; j++) {
-                if (currentNumsMap[i][j] === 0) {
-                    this.tiles[i][j].image = images.black;
-                } else if (currentNumsMap[i][j] == 1) {
-                    this.tiles[i][j].image = images.grass;
-                } else if (currentNumsMap[i][j] == 2) {
-                    this.tiles[i][j].image = images.rock;
-                } else if (currentNumsMap[i][j] == 3) {
-                    this.tiles[i][j].image = images.water;
-                } else if (currentNumsMap[i][j] == 4) {
-                    this.tiles[i][j].image = images.sand;
-                } else if (currentNumsMap[i][j] == 5) {
-                    this.tiles[i][j].image = images.city;
-                } else if (currentNumsMap[i][j] == 6) {
-                    this.tiles[i][j].image = images.deepWater;
-                }
-                else if (currentNumsMap[i][j] == 7) {
-                    this.tiles[i][j].image = images.forest;
-                }
-            }
-        }
-    }
-
-    save() {
-        this.numsMap = [];
-        for (let i = 0; i < this.tiles.length; i++) {
-            this.numsMap[i] = [];
-            for (let j = 0; j < this.tiles[i].length; j++) {
-                if (this.tiles[i][j].image == images.black) {
-                    this.numsMap[i][j] = 0;
-                } else if (this.tiles[i][j].image == images.grass) {
-                    this.numsMap[i][j] = 1;
-                } else if (this.tiles[i][j].image == images.rock) {
-                    this.numsMap[i][j] = 2;
-                } else if (this.tiles[i][j].image == images.water) {
-                    this.numsMap[i][j] = 3;
-                } else if (this.tiles[i][j].image == images.sand) {
-                    this.numsMap[i][j] = 4;
-                } else if (this.tiles[i][j].image == images.city) {
-                    this.numsMap[i][j] = 5;
-                } else if (this.tiles[i][j].image == images.deepWater) {
-                    this.numsMap[i][j] = 6;
-                }
-                else if (this.tiles[i][j].image == images.forest) {
-                    this.numsMap[i][j] = 7;
-                }
-            }
-        }
-        let name = prompt('Please Name the Save');
-        if (name !== '') {
-            //window.open('save.php?name=' + name + '&map=' + this.numsMap + '&width=' + this.tiles.length + '&height=' + this.tiles[0].length, 'Map Save');
-            //alert('save called');
-            var oReqs = new XMLHttpRequest();
-            oReqs.onload = function() {
-
-            };
-            oReqs.open("get", 'php/save.php?name=' + name + '&map=' + this.numsMap + '&width=' + this.tiles.length + '&height=' + this.tiles[0].length, true);
-            oReqs.send();
-        } else {
-            alert('You did not enter a name');
-        }
-    }
-
-    load() {
-        var mapToLoadAsString;
-        var scope = this;
-        currentFile = prompt('What would you like to name the file to open?');
-        var oReq = new XMLHttpRequest(); //New request object
-        oReq.onload = function() {
-            mapToLoadAsString = oReq.responseText;
-            scope.mapToLoad = mapToLoadAsString.split(',');
-            //console.log(scope.mapToLoad);
-            //alert(mapToLoadAsString);
-            let k = 2;
-            for (let i = 0; i < scope.mapToLoad[0]; i++) {
-                for (let j = 0; j < scope.mapToLoad[1]; j++) {
-                    if (scope.mapToLoad[k] == 1)
-                        scope.tiles[i][j].image = images.grass;
-                    else if (scope.mapToLoad[k] == 2)
-                        scope.tiles[i][j].image = images.rock;
-                    else if (scope.mapToLoad[k] == 3)
-                        scope.tiles[i][j].image = images.water;
-                    else if (scope.mapToLoad[k] == 4)
-                        scope.tiles[i][j].image = images.sand;
-                    else if (scope.mapToLoad[k] == 5)
-                        scope.tiles[i][j].image = images.city;
-                    else if (scope.mapToLoad[k] == 6)
-                        scope.tiles[i][j].image = images.deepWater;
-                    else if (scope.mapToLoad[k] == 7)
-                        scope.tiles[i][j].image = images.forest;
-                    k++;
-                }
-            }
-        };
-        oReq.open("get", "php/load.php?name=" + currentFile, true);
-        oReq.send();
-        tileSize = 32;
-    }
-
-    serverRandomLoad() {
-        var mapToLoadAsString;
-        var scope = this;
-        var oReq = new XMLHttpRequest(); //New request object
-        oReq.onload = function() {
-            mapToLoadAsString = oReq.responseText;
-            scope.mapToLoad = mapToLoadAsString.split(',');
-            //console.log(scope.mapToLoad);
-            //alert(mapToLoadAsString);
-            let k = 2;
-            for (let i = 0; i < scope.mapToLoad[0]; i++) {
-                for (let j = 0; j < scope.mapToLoad[1]; j++) {
-                    if (scope.mapToLoad[k] == 1)
-                        scope.tiles[i][j].image = images.grass;
-                    else if (scope.mapToLoad[k] == 2)
-                        scope.tiles[i][j].image = images.rock;
-                    else if (scope.mapToLoad[k] == 3)
-                        scope.tiles[i][j].image = images.water;
-                    else if (scope.mapToLoad[k] == 4)
-                        scope.tiles[i][j].image = images.sand;
-                    else if (scope.mapToLoad[k] == 5)
-                        scope.tiles[i][j].image = images.city;
-                    else if (scope.mapToLoad[k] == 6)
-                        scope.tiles[i][j].image = images.deepWater;
-                    else if (scope.mapToLoad[k] == 7)
-                        scope.tiles[i][j].image = images.forest;
-                    k++;
-                }
-            }
-        };
-        oReq.open("get", "php/serverMapCreate.php", true);
-        oReq.send();
-        tileSize = 32;
-    }
-}
-
-function painting() {
-    if (press) {
-        board.paintTile(mouseX - canvas.getBoundingClientRect().left + xOffSet, mouseY - canvas.getBoundingClientRect().top + yOffSet);
-    }
+function endTurn(){
 
 }
 
@@ -457,20 +124,20 @@ function changeView() {
     }
     if (left&&board.tiles[0][0].x+xOffSet>9)
     { 
+
     	xOffSet -= 10;
     }
 }
 
-var board = new BoardOfTiles();
-
 function update() {
     ctx.beginPath();
     ctx.fillStyle = 'black';
-    changeView();
-    painting();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    board.draw();
     //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if(drawing){
+    	changeView();
+    	drawBoard(board);
+    }
     ctx.fill();
     ctx.closePath();
 }
@@ -518,31 +185,23 @@ document.addEventListener("keydown", function(event) {
             alert("Sand");
             break;
         case 76: //l
-            board.load();
             break;
         case 82: //r
-            board.randomize1();
             break;
         case 84: //t
-            board.smooth();
             break;
         case 85: //u
-            board.randomize2();
             break;
         case 86: //v
-            board.serverRandomLoad();
+            beginGame();
             break;
         case 87: //w
-            console.log(board.tiles[10][10].x);
-            board.isoMap();
-                console.log(board.tiles[10][10].x);
             break;
         case 77: //m
             xOffSet = 0;
             yOffSet = 0;
             break;
         case 83: //s key
-            board.save();
             break;
         case 37: //left
             right = false;
@@ -559,17 +218,11 @@ document.addEventListener("keydown", function(event) {
         case 90: //z
             if (tileSize*board.tiles[0].length >= window.screen.availWidth) {
                 tileSize /= 1.1;
-                board.zoomStart();
-                board = new BoardOfTiles();
-                board.zoomEnd();
             }
             break;
         case 88: //x
             if (tileSize < 128) {
                 tileSize *= 1.1;
-                board.zoomStart();
-                board = new BoardOfTiles();
-                board.zoomEnd();
             }
             break;
 
@@ -583,16 +236,10 @@ canvas.addEventListener("mousewheel", function(event) {
     if (event.deltaY > 0) {
         if (tileSize*board.tiles[0].length >= window.screen.availWidth) {
             tileSize /= 1.1;
-            board.zoomStart();
-            board = new BoardOfTiles();
-            board.zoomEnd();
         }
     } else {
         if (tileSize < 128) {
             tileSize *= 1.1;
-            board.zoomStart();
-            board = new BoardOfTiles();
-            board.zoomEnd();
         }
     }
 });
