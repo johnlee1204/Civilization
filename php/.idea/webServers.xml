@@ -5,7 +5,7 @@
       <webServer id="3fb34ea5-e0ce-4cb9-8e24-1ea3aec82bc8" name="107.180.46.155" url="http://107.180.46.155">
         <fileTransfer host="107.180.46.155" port="21" rootFolder="/maganyatesting/php">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
           </advancedOptions>
           <option name="port" value="21" />
         </fileTransfer>
