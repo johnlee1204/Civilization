@@ -1,0 +1,184 @@
+[22-Jun-2018 05:36:15 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 50
+[22-Jun-2018 05:37:40 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 395
+[22-Jun-2018 05:37:40 UTC] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:396
+Stack trace:
+#0 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 396
+[22-Jun-2018 05:39:22 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 403
+[22-Jun-2018 05:48:47 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 50
+[24-Jun-2018 00:23:56 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function CivilizationPhp\Player::__construct(), 3 passed in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 27 and exactly 4 expected in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:25
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(27): CivilizationPhp\Player->__construct('John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(276): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 25
+[24-Jun-2018 00:24:14 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function CivilizationPhp\Player::__construct(), 3 passed in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 27 and exactly 4 expected in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:25
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(27): CivilizationPhp\Player->__construct('John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(276): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 25
+[24-Jun-2018 00:24:32 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function CivilizationPhp\Player::__construct(), 3 passed in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 27 and exactly 4 expected in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:25
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(27): CivilizationPhp\Player->__construct('John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(276): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 25
+[24-Jun-2018 01:02:14 UTC] PHP Parse error:  syntax error, unexpected end of file, expecting variable (T_VARIABLE) or ${ (T_DOLLAR_OPEN_CURLY_BRACES) or {$ (T_CURLY_OPEN) in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 48
+[24-Jun-2018 01:04:04 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:05 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:06 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:07 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:08 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:08 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:08 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:09 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:09 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:10 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:10 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:11 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:11 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:11 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:12 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:12 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:13 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:13 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:14 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:14 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:15 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:15 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:16 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:16 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:17 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:17 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:18 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:19 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:20 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:21 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:22 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:22 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:23 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:23 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:24 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:24 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:25 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:25 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:26 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:26 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:27 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:27 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:28 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:28 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:29 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:29 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:30 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:30 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:31 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:31 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:32 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:32 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:33 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:33 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:34 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:34 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:35 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:35 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:36 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:36 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:37 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:37 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:38 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:38 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ',' or ')' in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 293
+[24-Jun-2018 01:04:39 UTC] PHP Parse error:  syntax error, unexpected end of file, expecting variable (T_VARIABLE) or ${ (T_DOLLAR_OPEN_CURLY_BRACES) or {$ (T_CURLY_OPEN) in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 48
+[24-Jun-2018 17:20:43 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 286
+[24-Jun-2018 17:27:21 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:27:21 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, null given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:27:21 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 312
+[24-Jun-2018 17:31:11 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 286
+[24-Jun-2018 17:31:11 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:31:11 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, null given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:31:11 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 312
+[24-Jun-2018 17:32:42 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:32:42 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, null given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:32:42 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 312
+[24-Jun-2018 17:34:19 UTC] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:34:19 UTC] PHP Warning:  mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, null given in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 310
+[24-Jun-2018 17:34:19 UTC] PHP Warning:  mysqli::close(): Couldn't fetch mysqli in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 312
+[24-Jun-2018 20:07:23 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 51
+[24-Jun-2018 20:09:31 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 51
+[24-Jun-2018 20:47:41 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 51
+[28-Jun-2018 03:03:58 UTC] PHP Fatal error:  Uncaught Error: Class 'Unit' not found in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:279
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(362): GameRunner::loadState()
+#1 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 279
+[28-Jun-2018 03:04:05 UTC] PHP Fatal error:  Uncaught Error: Class 'City' not found in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:327
+Stack trace:
+#0 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 327
+[28-Jun-2018 03:04:46 UTC] PHP Fatal error:  Uncaught Error: Class 'Unit' not found in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:279
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(361): GameRunner::loadState()
+#1 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 279
+[28-Jun-2018 03:06:03 UTC] PHP Fatal error:  Uncaught Error: Cannot instantiate abstract class CivilizationPhp\Unit in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:282
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(364): GameRunner::loadState()
+#1 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 282
+[28-Jun-2018 03:09:02 UTC] PHP Fatal error:  Uncaught TypeError: Argument 9 passed to CivilizationPhp\Warrior::__construct() must be an instance of CivilizationPhp\Tile, string given, called in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 287 and defined in /home/aqs8snko6af6/public_html/maganyatesting/php/Warrior.php:18
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(287): CivilizationPhp\Warrior->__construct('1', '1', '30', '20', '2', '100', 'Johnistans Warr...', '0', '20', '33')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(375): GameRunner::loadState()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Warrior.php on line 18
+[28-Jun-2018 03:31:12 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 54
+[28-Jun-2018 03:31:38 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function vardump() in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:160
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(541): GameRunner::saveState()
+#1 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 160
+[28-Jun-2018 03:39:44 UTC] PHP Fatal error:  Uncaught Error: Cannot use object of type CivilizationPhp\Warrior as array in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php:162
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(545): GameRunner::saveState()
+#1 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 162
+[28-Jun-2018 03:40:23 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 54
+[28-Jun-2018 04:37:03 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 54
+[28-Jun-2018 04:53:36 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 118
+[28-Jun-2018 05:07:33 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function CivilizationPhp\City::__construct(), 9 passed in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 309 and exactly 10 expected in /home/aqs8snko6af6/public_html/maganyatesting/php/City.php:24
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(309): CivilizationPhp\City->__construct('1', 'Alayna', '1', '1', '100', '50', '5', '5', Object(CivilizationPhp\Tile))
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(377): GameRunner::loadState()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/City.php on line 24
+[28-Jun-2018 05:09:36 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getRow() on integer in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:34
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(38): CivilizationPhp\Player->__construct(1, 'John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(373): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 34
+[28-Jun-2018 05:12:48 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getRow() on integer in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:34
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(38): CivilizationPhp\Player->__construct(1, 'John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(373): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 34
+[28-Jun-2018 05:15:11 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getRow() on integer in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:35
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(38): CivilizationPhp\Player->__construct(1, 'John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(373): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 35
+[28-Jun-2018 05:15:26 UTC] PHP Fatal error:  Uncaught Error: Call to a member function getRow() on integer in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php:35
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(38): CivilizationPhp\Player->__construct(1, 'John', 'Johnistan', 'images/johnPlay...')
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(373): GameRunner::start()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/Player.php on line 35
+[28-Jun-2018 05:21:42 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function CivilizationPhp\City::__construct(), 9 passed in /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php on line 309 and exactly 10 expected in /home/aqs8snko6af6/public_html/maganyatesting/php/City.php:24
+Stack trace:
+#0 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(309): CivilizationPhp\City->__construct('1', 'Alayna', '1', '1', '100', '50', '5', '5', Object(CivilizationPhp\Tile))
+#1 /home/aqs8snko6af6/public_html/maganyatesting/php/GameRunner.php(377): GameRunner::loadState()
+#2 {main}
+  thrown in /home/aqs8snko6af6/public_html/maganyatesting/php/City.php on line 24

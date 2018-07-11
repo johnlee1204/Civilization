@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Civilization</title>
+    <style>
+    	.stop-scrolling {
+  		height: 100%;
+  		width: 100%;
+  		overflow: hidden;
+  		min-height: 100%;
+		}
+
+		* {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        vertical-align: baseline;
+        background: transparent;
+    	}
+
+    	#startButton {
+    		position:fixed;
+    		z-index: 999999999;
+    		top:48.5%;
+    		left:47.5%;
+    		font-size:50px;
+    	}
+
+    	.buttonSpan {
+    		position:fixed;
+    		z-index: 999999999;
+    		top:42%;
+    		left:45.5%;
+    		background-color: red;
+    		width: 200px;
+    		height: 200px;
+    		border-radius:100%; 
+    	}
+	</style>
+  </head>
+  <body class='stop-scrolling'>
+  	<span id = 'buttonS' class='buttonSpan'>
+  		<button id = 'startButton' type="button" width = '200px' height = '200px'>Begin</button>
+  	</span>
+   <script src="main.js"></script>
+  </body>
+</html>
