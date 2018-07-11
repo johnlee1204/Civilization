@@ -202,6 +202,7 @@ function drawBoard() {
         possibleMoves = [];
 	}
 	if(warning){
+		//displays a warning if moving not your player
 	        ctx.fillStyle = "black";
 	    	ctx.drawImage(images.scroll,canvas.width/5*2,0,canvas.width/5,canvas.height*.1);
 	    	ctx.fillStyle = "black";
