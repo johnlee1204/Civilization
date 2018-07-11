@@ -1,8 +1,0 @@
-[10-May-2018 17:30:11 UTC] PHP Warning:  fopen(Maps/chris.txt): failed to open stream: No such file or directory in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 5
-[10-May-2018 17:30:11 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 6
-[10-May-2018 21:19:42 UTC] PHP Warning:  fopen(Maps/chris.txt): failed to open stream: No such file or directory in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 5
-[10-May-2018 21:19:42 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 6
-[11-May-2018 13:47:11 UTC] PHP Warning:  fopen(Maps/Game.txt): failed to open stream: No such file or directory in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 5
-[11-May-2018 13:47:11 UTC] PHP Warning:  fread() expects parameter 1 to be resource, boolean given in /home/aqs8snko6af6/public_html/maganyatesting/load.php on line 6
-[13-May-2018 00:08:50 UTC] PHP Notice:  Undefined index: functionname in /home/aqs8snko6af6/public_html/maganyatesting/GameComponents.php on line 305
-[13-May-2018 00:08:50 UTC] PHP Notice:  Undefined index: size in /home/aqs8snko6af6/public_html/maganyatesting/GameComponents.php on line 306
