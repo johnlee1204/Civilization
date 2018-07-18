@@ -1,9 +1,8 @@
 /*jshint maxerr: 1000 */
-
 document.getElementById('buttonS').onclick = beginGame;
 var canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
-canvas.oncontextmenu = function (e) {
+canvas.oncontextmenu = function(e) {
     e.preventDefault();
 };
 canvas.style.backgroundColor = "black";
@@ -12,6 +11,7 @@ canvas.height = window.screen.availHeight + 40;
 canvas.style.display = 'block';
 var ctx = canvas.getContext('2d');
 var currentImage = 0;
+
 var blackTile = document.createElement('img');
 blackTile.src = 'images/blackTile.png';
 blackTile.style.display = 'none';
@@ -56,6 +56,10 @@ document.body.appendChild(scroll);
 scroll.src = 'images/scroll.jpg';
 scroll.style.display = 'none';
 
+var gameBoardPicture = document.createElement("img");
+document.body.appendChild(gameBoardPicture);
+gameBoardPicture.style.display = 'none';
+
 document.body.appendChild(waterTile);
 var images = {
     black: blackTile,
@@ -87,20 +91,38 @@ let board;
 let player1;
 var units = [];
 let unitSelected;
+let citySelected;
 let possibleMoves = [];
 let started = false;
 let moving = false;
 let updatingMovement = false;
 let warning = false;
 var cities = [];
+var buttons = [];
+var deleteUnit;
+var dataURL;
 
-const playerId = prompt("Which Player are you?");
+function initButtons() {
+    deleteUnit = {
+        x: canvas.width / 5 - 90,
+        y: canvas.height * .7 + 120,
+        width: 75,
+        height: 50,
+        text: "Delete Unit",
+        isVisible: false,
+        action: deleteUnitFunction
+    }
+}
+initButtons();
 
-function reset(){
-	var scope = this;
+//const playerId = prompt("Which Player are you?");
+const playerId = 1;
+
+function reset() {
+    var scope = this;
     var oReq = new XMLHttpRequest(); //New request object
-    oReq.onload = function () {
-    	location.reload();
+    oReq.onload = function() {
+        location.reload();
     };
     oReq.open("get", "php/GameRunner.php?resetgame=true", true);
     oReq.send();
@@ -111,18 +133,14 @@ function beginGame() {
     var mapToLoadAsString;
     var scope = this;
     var oReq = new XMLHttpRequest(); //New request object
-    oReq.onload = function () {
-        //mapToLoadAsString = oReq.response;
-        //scope.mapToLoad = mapToLoadAsString.split(',');
+    oReq.onload = function() {
         units = [];
         let serverReply = JSON.parse(oReq.response);
         board = serverReply.gameBoard;
+        //drawInitialBoard();
         player1 = serverReply.player1;
         player2 = serverReply.player2;
         units = serverReply.units;
-        /*for(let i = 0;i<player1.units.length;i++){
-            units.push(player1.units[i]);
-        }*/
         drawing = true;
         update();
         updatingMovement = false;
@@ -134,34 +152,59 @@ function beginGame() {
     document.getElementById('buttonS').style.display = "none";
 }
 
-function drawBoard() {
+function drawInitialBoard() {
     for (let i = 0; i < board.tiles.length; i++) {
         for (let j = 0; j < board.tiles[i].length; j++) {
             if (imagesAsNum[board.tiles[i][j].image]) {
                 if (possibleMoves.includes(board.tiles[i][j])) {
-                	ctx.globalAlpha = .5;
+                    ctx.globalAlpha = .5;
                     ctx.drawImage(imagesAsNum[0], j * tileSize - xOffSet, i * tileSize - yOffSet, tileSize, tileSize);
                     ctx.globalAlpha = 1;
-                }
-                else {
+                } else {
                     ctx.drawImage(imagesAsNum[board.tiles[i][j].image], j * tileSize - xOffSet, i * tileSize - yOffSet, tileSize, tileSize);
                 }
             }
         }
     }
+    dataURL = canvas.toDataURL();
+    gameBoardPicture.src = dataURL;
+}
+
+function drawBoard() {
+    for (let i = 0; i < board.tiles.length; i++) {
+        for (let j = 0; j < board.tiles[i].length; j++) {
+            if (imagesAsNum[board.tiles[i][j].image]) {
+                if (possibleMoves.includes(board.tiles[i][j])) {
+                    ctx.globalAlpha = .5;
+                    ctx.drawImage(imagesAsNum[0], j * tileSize - xOffSet, i * tileSize - yOffSet, tileSize, tileSize);
+                    ctx.globalAlpha = 1;
+                } else {
+                    ctx.drawImage(imagesAsNum[board.tiles[i][j].image], j * tileSize - xOffSet, i * tileSize - yOffSet, tileSize, tileSize);
+                }
+            }
+        }
+    }
+
+    //ctx.drawImage(gameBoardPicture,-1*xOffSet,-1*yOffSet,tileSize*100,tileSize*50);
     for (let i = 0; i < units.length; i++) {
         ctx.drawImage(unitImagesAsNum[units[i].image], units[i].posTile.col * tileSize - xOffSet + .25 * tileSize, units[i].posTile.row * tileSize - yOffSet + .25 * tileSize, tileSize / 2, tileSize / 1.5);
     }
 
-    if(unitSelected){
-    	ctx.fillStyle = "black";
-    	ctx.drawImage(images.scroll,0,canvas.height*.7,canvas.width*.2,canvas.height*.3);
-    	ctx.fillStyle = "black";
-    	ctx.font = "20px Georgia"
-    	ctx.fillText("Unit: "+unitSelected.name.replace('\\',''),40,canvas.height*.7+50);
-    	ctx.fillText("Health: "+unitSelected.health,40,canvas.height*.7+120);
-    	ctx.fillText("Attack: "+unitSelected.attack,40,canvas.height*.7+190);
-    	ctx.fillText("Defense: "+unitSelected.defense,40,canvas.height*.7+260);
+    if (unitSelected) {
+        ctx.fillStyle = "black";
+        ctx.drawImage(images.scroll, 0, canvas.height * .7, canvas.width * .2, canvas.height * .3);
+        ctx.fillStyle = "black";
+        ctx.font = "20px Georgia"
+        ctx.fillText("Unit: " + unitSelected.name.replace('\\', ''), 40, canvas.height * .7 + 50);
+        ctx.fillText("Health: " + unitSelected.health, 40, canvas.height * .7 + 120);
+        ctx.fillText("Attack: " + unitSelected.attack, 40, canvas.height * .7 + 190);
+        ctx.fillText("Defense: " + unitSelected.defense, 40, canvas.height * .7 + 260);
+        if (unitSelected.playerId == playerId) {
+            ctx.fillRect(deleteUnit.x, deleteUnit.y, deleteUnit.width, deleteUnit.height);
+            ctx.fillStyle = "white";
+            ctx.font = "10px Georgia"
+            ctx.fillText(deleteUnit.text, deleteUnit.x + 20, deleteUnit.y + 20);
+        }
     }
 
     if (unitSelected && possibleMoves.length == 0 && unitSelected.playerId == playerId) {
@@ -169,54 +212,87 @@ function drawBoard() {
         let pos = unitSelected.posTile;
 
         for (let i = 1; i <= mp; i++) {
-        	if(parseInt(pos.row) - i>=0){
-            	possibleMoves.push(board.tiles[parseInt(pos.row) - i][parseInt(pos.col)].image != "3" && board.tiles[parseInt(pos.row) - i][parseInt(pos.col)].image != "6" ? board.tiles[parseInt(pos.row) - i][parseInt(pos.col)] : null);
-        	}
-        	if(parseInt(pos.row) + i < board.tiles.length){
-            	possibleMoves.push(board.tiles[parseInt(pos.row) + i][parseInt(pos.col)].image != "3" && board.tiles[parseInt(pos.row) + i][parseInt(pos.col)].image != "6" ? board.tiles[parseInt(pos.row) + i][parseInt(pos.col)] : null);
+            if (parseInt(pos.row) - i >= 0) {
+                possibleMoves.push(board.tiles[parseInt(pos.row) - i][parseInt(pos.col)].image != "3" && board.tiles[parseInt(pos.row) - i][parseInt(pos.col)].image != "6" ? board.tiles[parseInt(pos.row) - i][parseInt(pos.col)] : null);
             }
-            if(parseInt(pos.col) - i>=0){
-            	possibleMoves.push(board.tiles[parseInt(pos.row)][parseInt(pos.col) - i].image != "3" && board.tiles[parseInt(pos.row)][parseInt(pos.col) - i].image != "6" ? board.tiles[parseInt(pos.row)][parseInt(pos.col) - i] : null);
+            if (parseInt(pos.row) + i < board.tiles.length) {
+                possibleMoves.push(board.tiles[parseInt(pos.row) + i][parseInt(pos.col)].image != "3" && board.tiles[parseInt(pos.row) + i][parseInt(pos.col)].image != "6" ? board.tiles[parseInt(pos.row) + i][parseInt(pos.col)] : null);
             }
-            if(parseInt(pos.col) + i<board.tiles[0].length){
-            	possibleMoves.push(board.tiles[parseInt(pos.row)][parseInt(pos.col) + i].image != "3" && board.tiles[parseInt(pos.row)][parseInt(pos.col) + i].image != "6" ? board.tiles[parseInt(pos.row)][parseInt(pos.col) + i] : null);
+            if (parseInt(pos.col) - i >= 0) {
+                possibleMoves.push(board.tiles[parseInt(pos.row)][parseInt(pos.col) - i].image != "3" && board.tiles[parseInt(pos.row)][parseInt(pos.col) - i].image != "6" ? board.tiles[parseInt(pos.row)][parseInt(pos.col) - i] : null);
+            }
+            if (parseInt(pos.col) + i < board.tiles[0].length) {
+                possibleMoves.push(board.tiles[parseInt(pos.row)][parseInt(pos.col) + i].image != "3" && board.tiles[parseInt(pos.row)][parseInt(pos.col) + i].image != "6" ? board.tiles[parseInt(pos.row)][parseInt(pos.col) + i] : null);
             }
             if (i !== 0 && i % 2 == 0) {
-            	if(parseInt(pos.row) - i / 2>=0&&parseInt(pos.col) - i / 2>=0){
-                	possibleMoves.push(board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2].image != "3" && board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2].image != "6" ? board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2] : null);
+                if (parseInt(pos.row) - i / 2 >= 0 && parseInt(pos.col) - i / 2 >= 0) {
+                    possibleMoves.push(board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2].image != "3" && board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2].image != "6" ? board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) - i / 2] : null);
                 }
-                if(parseInt(pos.row) + i / 2<board.tiles.length&&parseInt(pos.col) + i / 2<board.tiles[0].length){
-                	possibleMoves.push(board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2].image != "3" && board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2].image != "6" ? board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2] : null);
+                if (parseInt(pos.row) + i / 2 < board.tiles.length && parseInt(pos.col) + i / 2 < board.tiles[0].length) {
+                    possibleMoves.push(board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2].image != "3" && board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2].image != "6" ? board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) + i / 2] : null);
                 }
-                if(parseInt(pos.row) - i / 2>=0&&parseInt(pos.col) + i / 2<board.tiles[0].length){
-                	possibleMoves.push(board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2].image != "3" && board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2].image != "6" ? board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2] : null);
+                if (parseInt(pos.row) - i / 2 >= 0 && parseInt(pos.col) + i / 2 < board.tiles[0].length) {
+                    possibleMoves.push(board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2].image != "3" && board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2].image != "6" ? board.tiles[parseInt(pos.row) - i / 2][parseInt(pos.col) + i / 2] : null);
                 }
-                if(parseInt(pos.row) + i / 2<board.tiles.length&&parseInt(pos.col) - i / 2>=0){
-                	possibleMoves.push(board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2].image != "3" && board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2].image != "6" ? board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2] : null);
+                if (parseInt(pos.row) + i / 2 < board.tiles.length && parseInt(pos.col) - i / 2 >= 0) {
+                    possibleMoves.push(board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2].image != "3" && board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2].image != "6" ? board.tiles[parseInt(pos.row) + i / 2][parseInt(pos.col) - i / 2] : null);
                 }
             }
         }
         update();
-    }
-    else if (!unitSelected) {
+    } else if (!unitSelected) {
         possibleMoves = [];
-	}
-	if(warning){
-		//displays a warning if moving not your player
-	        ctx.fillStyle = "black";
-	    	ctx.drawImage(images.scroll,canvas.width/5*2,0,canvas.width/5,canvas.height*.1);
-	    	ctx.fillStyle = "black";
-	    	ctx.font = "20px Georgia"
-	    	ctx.fillText("You can't control that player",canvas.width/5*2+10,20);
-		}
+    }
+    if (warning) {
+        //displays a warning if moving not your player
+        ctx.fillStyle = "black";
+        ctx.drawImage(images.scroll, canvas.width / 5 * 2, 0, canvas.width / 5, canvas.height * .1);
+        ctx.fillStyle = "black";
+        ctx.font = "20px Georgia"
+        ctx.fillText("You can't control that player", canvas.width / 5 * 2 + 10, 20);
+    }
+
+    if (citySelected) {
+        ctx.fillStyle = "black";
+        ctx.drawImage(images.scroll, 0, canvas.height * .7, canvas.width * .2, canvas.height * .3);
+        ctx.fillStyle = "black";
+        ctx.font = "20px Georgia"
+        ctx.fillText("Name: " + citySelected.name, 40, canvas.height * .7 + 50);
+        ctx.fillText("Defense: " + citySelected.defense, 40, canvas.height * .7 + 120);
+        ctx.fillText("Attack: " + citySelected.attack, 40, canvas.height * .7 + 190);
+        ctx.fillText("Production: " + citySelected.production, 40, canvas.height * .7 + 260);
+    }
 }
 
+function checkForButtonClick(x, y) {
+    /*buttons.forEach(function(button){
+    	if(button.isVisible&&button.x<x&&button.x+button.width>x&&button.y<y&&button.y+button.height>y){
+    		button.action;
+    	}
+    });
+    */
+    console.log('tried to click button');
+    if (deleteUnit.isVisible && deleteUnit.x < x && deleteUnit.x + deleteUnit.width > x && deleteUnit.y < y && deleteUnit.y + deleteUnit.height > y) {
+        console.log('button clicked');
+        deleteUnit.action();
+    }
+}
+
+function deleteUnitFunction() {
+    unitId = unitSelected.id;
+    for (let i = 0; i < units.length; i++) {
+        if (units[i].id == unitId) {
+            units.splice(i, 1);
+            return;
+        }
+    }
+}
 
 function endTurn() {
     if (drawing) {
         var scope = this;
         var oReq = new XMLHttpRequest(); //New request object
-        oReq.onload = function () {
+        oReq.onload = function() {
             if (oReq.response && isJson(oReq.response)) {
                 let serverReply = JSON.parse(oReq.response);
                 if (serverReply.gameBoard && serverReply.player1) {
@@ -272,7 +348,7 @@ function isJson(str) {
 function moveUnit(unit, newX, newY) {
     let newRow = Math.floor(newY / tileSize);
     let newCol = Math.floor(newX / tileSize);
-    if(!moving&&board.tiles[newRow][newCol].image!="3"&&board.tiles[newRow][newCol].image!="6" && unit.playerId == playerId) {
+    if (!moving && board.tiles[newRow][newCol].image != "3" && board.tiles[newRow][newCol].image != "6" && unit.playerId == playerId) {
         moving = true;
         let newRow = Math.floor(newY / tileSize);
         let newCol = Math.floor(newX / tileSize);
@@ -281,98 +357,91 @@ function moveUnit(unit, newX, newY) {
         //check for attack
         let attacking = false;
         let defendingId = null;
-        for(let i = 0; i< units.length;i++){
-        	if(units[i].posTile.row == newRow && units[i].posTile.col == newCol){
-        		attacking = true;
-        		defendingId = units[i].id;
-        	}
+        for (let i = 0; i < units.length; i++) {
+            if (units[i].posTile.row == newRow && units[i].posTile.col == newCol) {
+                attacking = true;
+                defendingId = units[i].id;
+            }
         }
         //attacking
-        if(attacking&&unitId!=defendingId){
-        	var scope = this;
-	        var oReq = new XMLHttpRequest(); //New request object
-	        oReq.onload = function () {
-	            if (oReq.response && isJson(oReq.response)) {
+        if (attacking && unitId != defendingId) {
+            var scope = this;
+            var oReq = new XMLHttpRequest(); //New request object
+            oReq.onload = function() {
+                if (oReq.response && isJson(oReq.response)) {
                     let serverReply = JSON.parse(oReq.response);
                     unitsFromServer = serverReply;
                     units = unitsFromServer;
                     update();
                 }
-	            moving = false;
-	        };
-	        oReq.open("get", "php/GameRunner.php?attack=true&attackUnitId=" + unitId + "&defendUnitId=" + defendingId+"&playerid="+playerId, true);
-	        oReq.send();
+                moving = false;
+            };
+            oReq.open("get", "php/GameRunner.php?attack=true&attackUnitId=" + unitId + "&defendUnitId=" + defendingId + "&playerid=" + playerId, true);
+            oReq.send();
         }
         //not attacking
-        else{
-	        var scope = this;
-	        var oReq = new XMLHttpRequest(); //New request object
-	        oReq.onload = function () {
-	            if (oReq.response && isJson(oReq.response)) {
-	                let serverReply = JSON.parse(oReq.response);
-	                newTile = serverReply;
-	                unit.posTile.row = newTile.row;
-	                unit.posTile.col = newTile.col;
-	                update();
-	            }
-	            moving = false;
-	        };
-	        oReq.open("get", "php/GameRunner.php?move=true&unitId=" + unitId + "&newRow=" + newRow + "&newCol=" + newCol + "&update=true&playerid="+playerId, true);
-	        oReq.send();
-    	}
-    }
-    else if(moving){
-        alert("Please wait for the last movement to finish");
-    }
-    else if(unit.playerId != playerId)
-    {
-    	var count = 0;
-    	var warningInterval = setInterval(function(){
-    		warning = true;
-    		count++;
-	    	if(count>200){
-	    		warning = false;
-	    		clearInterval(warningInterval);
-	    	}
-    	},10);
-    	update();
-	}
-}
-
-function foundCity(unit){
-	let name = prompt("City Name?");
-	var scope = this;
+        else {
+            var scope = this;
             var oReq = new XMLHttpRequest(); //New request object
-            oReq.onload = function () {
-            	console.log('1');
+            oReq.onload = function() {
                 if (oReq.response && isJson(oReq.response)) {
                     let serverReply = JSON.parse(oReq.response);
-                    console.log('2');
-	                if (serverReply.gameBoard) {
-	                    units = [];
-	                    board = serverReply.gameBoard;
-	                    units = serverReply.units;
-	                    cities = serverReply.cities;
-	                    console.log('all');
-	                    console.log(units);
-	                    drawing = true;
-	                    update();
-	                }
+                    newTile = serverReply;
+                    unit.posTile.row = newTile.row;
+                    unit.posTile.col = newTile.col;
+                    update();
                 }
+                moving = false;
             };
-            oReq.open("get", "php/GameRunner.php?nextturn=true&foundcity=true&playerid="+unit.playerId+"&name="+name+"&settlerid="+unit.id, true);
+            oReq.open("get", "php/GameRunner.php?move=true&unitId=" + unitId + "&newRow=" + newRow + "&newCol=" + newCol + "&update=true&playerid=" + playerId, true);
             oReq.send();
+        }
+    } else if (moving) {
+        alert("Please wait for the last movement to finish");
+    } else if (unit.playerId != playerId) {
+        var count = 0;
+        var warningInterval = setInterval(function() {
+            warning = true;
+            count++;
+            if (count > 200) {
+                warning = false;
+                clearInterval(warningInterval);
+            }
+        }, 10);
+        update();
+    }
+}
+
+function foundCity(unit) {
+    let name = prompt("City Name?");
+    var scope = this;
+    var oReq = new XMLHttpRequest(); //New request object
+    oReq.onload = function() {
+        if (oReq.response && isJson(oReq.response)) {
+            let serverReply = JSON.parse(oReq.response);
+            if (serverReply.gameBoard) {
+                units = [];
+                board = serverReply.gameBoard;
+                units = serverReply.units;
+                cities = serverReply.cities;
+                drawing = true;
+                update();
+            }
+        }
+    };
+    oReq.open("get", "php/GameRunner.php?nextturn=true&foundcity=true&playerid=" + unit.playerId + "&name=" + name + "&settlerid=" + unit.id, true);
+    oReq.send();
 }
 
 
 function updateMovement() {
-    if(!updatingMovement&&!moving) {
+    if (!updatingMovement && !moving) {
         updatingMovement = true;
         if (drawing) {
             var scope = this;
             var oReq = new XMLHttpRequest(); //New request object
-            oReq.onload = function () {
-                if (oReq.response && isJson(oReq.response)&&!moving) {
+            oReq.onload = function() {
+                if (oReq.response && isJson(oReq.response) && !moving) {
                     let serverReply = JSON.parse(oReq.response);
                     unitsFromServer = serverReply;
                     for (let i = 0; i < unitsFromServer.length; i++) {
@@ -395,6 +464,17 @@ function checkIfSelectingUnit(x, y) {
     for (let i = 0; i < units.length; i++) {
         if (Math.floor(x / tileSize) == units[i].posTile.col && Math.floor(y / tileSize) == units[i].posTile.row) {
             unitSelected = units[i]
+            deleteUnit.isVisible = true;
+            update();
+            return;
+        }
+    }
+}
+
+function checkIfSelectingCity(x, y) {
+    for (let i = 0; i < cities.length; i++) {
+        if (!citySelected && (Math.floor(x / tileSize) == cities[i].tiles[0].col && Math.floor(y / tileSize) == cities[i].tiles[0].row)) {
+            citySelected = cities[i];
             update();
             return;
         }
@@ -412,7 +492,7 @@ function update() {
     ctx.closePath();
 }
 
-document.addEventListener("keydown", function (event) {
+document.addEventListener("keydown", function(event) {
     switch (event.keyCode) {
         case 48: //zero
             currentImage = 0;
@@ -458,11 +538,11 @@ document.addEventListener("keydown", function (event) {
         case 76: //l
             updateMovement();
             break;
-        case 78://n
+        case 78: //n
             endTurn();
             break;
         case 82: //r
-        reset();
+            reset();
             break;
         case 84: //t
             break;
@@ -470,40 +550,42 @@ document.addEventListener("keydown", function (event) {
             break;
         case 86: //v
             break;
-        case 87: //w
+        case 87: //w up
+            down = false;
             break;
         case 77: //m
             xOffSet = 0;
             yOffSet = 0;
             break;
-        case 83: //s key
-        	if(unitSelected&&unitSelected.image == 1){
-        		foundCity(unitSelected);
-        		unitSelected = false;
-        	}
-
+        case 83: //s key down
+            up = false;
             break;
-        case 37: //left
-            right = false;
+        case 70: //f key
+            if (unitSelected && unitSelected.image == 1) {
+                foundCity(unitSelected);
+                unitSelected = false;
+                deleteUnit.isVisible = false;
+            }
             break;
-        case 38: //up
-            down = false;
-            break;
-        case 39: //right
+        case 68: //d key right
             left = false;
             break;
-        case 40: //down
-            up = false;
+        case 65: //a key left
+            right = false;
             break;
         case 90: //z
             if (drawing && tileSize * board.tiles[0].length >= window.screen.availWidth) {
                 tileSize /= 1.1;
+                xOffSet = (xOffSet+mouseX)/1.1-mouseX;
+                yOffSet = (yOffSet+mouseY)/1.1-mouseY;
                 update();
             }
             break;
         case 88: //x
             if (drawing && tileSize < 128) {
                 tileSize *= 1.1;
+                xOffSet = (xOffSet+mouseX)*1.1-mouseX;
+                yOffSet = (yOffSet+mouseY)*1.1-mouseY;
                 update();
             }
             break;
@@ -513,33 +595,38 @@ document.addEventListener("keydown", function (event) {
             break;
     }
 });
-canvas.addEventListener("mousewheel", function (event) {
-    if (drawing && event.deltaY > 0) {
+canvas.addEventListener("mousewheel", function(event) {
+    if (drawing && event.deltaY > 0) { // zooming out
         if (tileSize * board.tiles[0].length >= window.screen.availWidth) {
             tileSize /= 1.1;
+            xOffSet = (xOffSet+mouseX)/1.1-mouseX;
+            yOffSet = (yOffSet+mouseY)/1.1-mouseY;
             update();
         }
-    } else {
-        if (drawing && tileSize < 128) {
+    } else {  //zooming in
+        if (drawing && tileSize < 256) {
             tileSize *= 1.1;
+            xOffSet = (xOffSet+mouseX)*1.1-mouseX;
+            yOffSet = (yOffSet+mouseY)*1.1-mouseY;
+                
+            }
             update();
         }
-    }
 });
 
 
-document.addEventListener("keyup", function (event) {
+document.addEventListener("keyup", function(event) {
     switch (event.keyCode) {
-        case 37: //left
+        case 65: //left
             right = true;
             break;
-        case 38: //up
+        case 87: //up
             down = true;
             break;
-        case 39: //right
+        case 68: //right
             left = true;
             break;
-        case 40: //down
+        case 83: //down
             up = true;
             break;
 
@@ -548,20 +635,33 @@ document.addEventListener("keyup", function (event) {
             break;
     }
 });
-canvas.addEventListener("mousedown", function (event) {
+canvas.addEventListener("mousedown", function(event) {
+
+    if (drawing) {
+        checkForButtonClick(event.clientX + xOffSet, event.clientY + yOffSet);
+    }
+
     if (drawing && !unitSelected) {
         checkIfSelectingUnit(event.clientX + xOffSet, event.clientY + yOffSet);
-    }
-    else if (drawing && unitSelected) {
+    } else if (drawing && unitSelected) {
         moveUnit(unitSelected, event.clientX + xOffSet, event.clientY + yOffSet);
         unitSelected = false;
+        deleteUnit.isVisible = false;
     }
+
+    if (drawing && !citySelected) {
+        checkIfSelectingCity(event.clientX + xOffSet, event.clientY + yOffSet);
+    } else if (drawing && citySelected) {
+        citySelected = false;
+    }
+
+
     update();
 });
-canvas.addEventListener("mouseup", function (event) {
+canvas.addEventListener("mouseup", function(event) {
     press = false;
 });
-canvas.addEventListener("mousemove", function (event) {
+canvas.addEventListener("mousemove", function(event) {
     mouseX = event.clientX;
     mouseY = event.clientY;
 });

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9db6ff8a-7c41-4298-9ed6-38182c592eb0" name="107.180.46.155" url="http://107.180.46.155">
+        <fileTransfer host="107.180.46.155" port="21" rootFolder="/maganyaTesting/php/">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
