@@ -84,7 +84,6 @@ var left = true;
 var press = false;
 var mouseX;
 var mouseY;
-var currentFile;
 let drawing = false;
 var tileSize = 32;
 let board;
